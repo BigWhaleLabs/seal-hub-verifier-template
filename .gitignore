@@ -8,6 +8,8 @@ build/*
 !build/.gitkeep
 public/*
 !public/.gitkeep
+pot/*
+!pot/.gitkeep
 
 # Hardhat files
 cache
