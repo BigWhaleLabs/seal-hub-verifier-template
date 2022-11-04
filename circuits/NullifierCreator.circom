@@ -40,6 +40,8 @@ template NullifierCreator() {
   // !! We are now sure that the user who generates this ZKP
   // !! knows the signature r, s signed with private key corresponding
   // !! to the pubKey. We can use this pubKey anyway we want
+  // !! e.g. proving that it's a part of a merkle tree and exporting
+  // !! the merkle root
   // !! But we *should not* export it as a public output
 
   // Get the compact public key
