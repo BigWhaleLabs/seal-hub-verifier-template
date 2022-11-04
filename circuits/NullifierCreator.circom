@@ -15,11 +15,16 @@ template NullifierCreator() {
   signal input siblings[levels]; // Merkle proof that commitment is a part of the Merkle tree
   // Verify SealHub commitment
   component sealHubValidator = SealHubValidator();
-  sealHubValidator.r <== r;
-  sealHubValidator.s <== s;
-  sealHubValidator.pubKey <== pubKey;
-  sealHubValidator.pathIndices <== pathIndices;
-  sealHubValidator.siblings <== siblings;
+  for (var i = 0; i < k; i++) {
+    sealHubValidator.r[i] <== r[i];
+    sealHubValidator.s[i] <== s[i];
+    sealHubValidator.pubKey[0][i] <== pubKey[0][i];
+    sealHubValidator.pubKey[1][i] <== pubKey[1][i];
+  }
+  for (var i = 0; i < levels; i++) {
+    sealHubValidator.pathIndices[i] <== pathIndices[i];
+    sealHubValidator.siblings[i] <== siblings[i];
+  }
   // Export Merkle root
   signal output merkleRoot <== sealHubValidator.merkleRoot;
 

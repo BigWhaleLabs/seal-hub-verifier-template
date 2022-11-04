@@ -8,8 +8,8 @@ template HashLeftRight() {
   signal input right;
 
   component poseidon = Poseidon(2);
-  poseidon.in[0] <== left;
-  poseidon.in[1] <== right;
+  poseidon.inputs[0] <== left;
+  poseidon.inputs[1] <== right;
 
   signal output hash <== poseidon.out;
 }
