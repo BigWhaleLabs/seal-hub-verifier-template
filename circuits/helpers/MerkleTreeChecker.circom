@@ -8,8 +8,8 @@ template HashLeftRight() {
   signal input right;
 
   component poseidon = Poseidon(2);
-  mimc7.in[0] <== left;
-  mimc7.in[1] <== right;
+  poseidon.in[0] <== left;
+  poseidon.in[1] <== right;
 
   signal output hash <== poseidon.out;
 }
@@ -29,7 +29,6 @@ template DualMux() {
 // pathIndices input is an array of 0/1 selectors telling whether given pathElement is on the left or right side of merkle path
 template MerkleTreeChecker(levels) {
   signal input leaf;
-  signal input root;
   signal input pathElements[levels];
   signal input pathIndices[levels];
 

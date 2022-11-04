@@ -47,8 +47,11 @@ template NullifierCreator() {
 
   // Get the compact public key
   component publicKeyToAddress = PublicKeyToAddress();
-  publicKeyConstructor.publicKey <== pubKey;
-  signal address <== publicKeyConstructor.compactPublicKey; // *Never* export this publicly
+  for (var i = 0; i < k; i++) {
+    publicKeyToAddress.pubKey[0][i] <== pubKey[0][i];
+    publicKeyToAddress.pubKey[1][i] <== pubKey[1][i];
+  }
+  signal address <== publicKeyToAddress.address; // *Never* export this publicly
 }
 
 component main = NullifierCreator();

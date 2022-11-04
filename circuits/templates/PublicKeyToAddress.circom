@@ -8,13 +8,13 @@ template PublicKeyToAddress() {
   var k = 4;
   var n = 64;
   // Get inputs
-  signal input publicKey[2][k];
+  signal input pubKey[2][k];
   // Compute address
   signal pubkeyBits[512];
   component flattenPubkey = FlattenPubkey(n, k);
   for (var i = 0; i < k; i++) {
-    flattenPubkey.chunkedPubkey[0][i] <== pubkey[0][i];
-    flattenPubkey.chunkedPubkey[1][i] <== pubkey[1][i];
+    flattenPubkey.chunkedPubkey[0][i] <== pubKey[0][i];
+    flattenPubkey.chunkedPubkey[1][i] <== pubKey[1][i];
   }
   for (var i = 0; i < 512; i++) {
     pubkeyBits[i] <== flattenPubkey.pubkeyBits[i];
