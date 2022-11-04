@@ -1,7 +1,7 @@
 pragma circom 2.0.4;
 
 include "./templates/SealHubValidator.circom";
-include "./templates/PublicKeyToAddress.circom";
+include "./templates/PublicKeyChunksToNum.circom";
 include "../node_modules/circomlib/circuits/mimcsponge.circom";
 
 template NullifierCreator() {
@@ -34,16 +34,16 @@ template NullifierCreator() {
   // !! We can now use r, s to create a nullifier that will be deterministic for this r, s
 
   // Compute nullifier
-  component mimc = MiMCSponge(2 * k + 2, 220, 1);
-  for (var i = 0; i < k; i++) {
-    mimc.ins[i] <== r[i];
-    mimc.ins[i + k] <== s[i];
-  }
-  mimc.ins[2 * k] <== 420;
-  mimc.ins[2 * k + 1] <== 69;
-  mimc.k <== 0;
+  // component mimc = MiMCSponge(2 * k + 2, 220, 1);
+  // for (var i = 0; i < k; i++) {
+  //   mimc.ins[i] <== r[i];
+  //   mimc.ins[i + k] <== s[i];
+  // }
+  // mimc.ins[2 * k] <== 420;
+  // mimc.ins[2 * k + 1] <== 69;
+  // mimc.k <== 0;
   // Export nullifier
-  signal output nullifierHash <== mimc.outs[0];
+  // signal output nullifierHash <== mimc.outs[0];
 
   // !! We are now sure that the user who generates this ZKP
   // !! knows the signature r, s signed with private key corresponding
@@ -53,12 +53,12 @@ template NullifierCreator() {
   // !! But we *should not* export it as a public output
 
   // Get the compact public key
-  component publicKeyToAddress = PublicKeyToAddress();
+  component publicKeyChunksToNum = PublicKeyChunksToNum();
   for (var i = 0; i < k; i++) {
-    publicKeyToAddress.pubKey[0][i] <== pubKey[0][i];
-    publicKeyToAddress.pubKey[1][i] <== pubKey[1][i];
+    publicKeyChunksToNum.pubKey[0][i] <== pubKey[0][i];
+    publicKeyChunksToNum.pubKey[1][i] <== pubKey[1][i];
   }
-  signal address <== publicKeyToAddress.address; // *Never* export this publicly
+  signal publicKeyNum <== publicKeyChunksToNum.publicKeyNum; // *Never* export this publicly
 }
 
 component main = NullifierCreator();
