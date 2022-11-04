@@ -1,6 +1,7 @@
 # SealHub verifier template
 
 Circom template to be used to verify a SealHub commitment.
+
 ## Usage
 
 1. Clone the repository with `git clone git@github.com:BigWhaleLabs/seal-hub-verifier-template.git`
