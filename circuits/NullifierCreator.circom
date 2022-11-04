@@ -34,11 +34,13 @@ template NullifierCreator() {
   // !! We can now use r, s to create a nullifier that will be deterministic for this r, s
 
   // Compute nullifier
-  component mimc = MiMCSponge(4, 220, 1);
-  mimc.ins[0] <== r;
-  mimc.ins[1] <== s;
-  mimc.ins[2] <== 420;
-  mimc.ins[3] <== 69;
+  component mimc = MiMCSponge(2 * k + 2, 220, 1);
+  for (var i = 0; i < k; i++) {
+    mimc.ins[i] <== r[i];
+    mimc.ins[i + k] <== s[i];
+  }
+  mimc.ins[2 * k] <== 420;
+  mimc.ins[2 * k + 1] <== 69;
   mimc.k <== 0;
   // Export nullifier
   signal output nullifierHash <== mimc.outs[0];
