@@ -24,7 +24,7 @@ template SealHubValidator() {
   for (var i = 0; i < k; i++) {
     mimc7.in[3 * k + i] <== pubKey[1][i];
   }
-  output signal commitment <== mimc7.out;
+  signal output commitment <== mimc7.out;
   // Check Merkle tree
   var levels = 30;
   signal input pathIndices[levels];
@@ -36,5 +36,5 @@ template SealHubValidator() {
     merkleTreeChecker.pathElements[i] <== siblings[i];
     merkleTreeChecker.pathIndices[i] <== pathIndices[i];
   }
-  output signal merkleRoot <== merkleTreeChecker.root;
+  signal output merkleRoot <== merkleTreeChecker.root;
 }

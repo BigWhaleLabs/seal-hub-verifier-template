@@ -11,7 +11,6 @@ template PublicKeyToAddress() {
   signal input publicKey[2][k];
   // Compute address
   signal pubkeyBits[512];
-  signal address;
   component flattenPubkey = FlattenPubkey(n, k);
   for (var i = 0; i < k; i++) {
     flattenPubkey.chunkedPubkey[0][i] <== pubkey[0][i];
@@ -24,5 +23,5 @@ template PublicKeyToAddress() {
   for (var i = 0; i < 512; i++) {
     pubkeyToAddress.pubkeyBits[i] <== pubkeyBits[i];
   }
-  output signal address <== pubkeyToAddress.address;
+  signal output address <== pubkeyToAddress.address;
 }
