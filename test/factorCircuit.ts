@@ -1,6 +1,6 @@
 import { assert } from 'chai'
 import { wasm as wasmTester } from 'circom_tester'
-import getFactorInputs from '../utils/inputs/getFactorInputs'
+import getFactorInputs from '../utils/inputs/getNullifierCreatorInputs'
 
 describe('FactorChecker circuit', function () {
   before(async function () {
