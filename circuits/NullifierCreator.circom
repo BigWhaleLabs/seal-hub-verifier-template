@@ -1,12 +1,12 @@
 pragma circom 2.0.4;
 
 include "./templates/SealHubValidator.circom";
-include "./templates/PublicKeyConstructor.circom";
+include "./templates/PublicKeyToAddress.circom";
 include "../node_modules/circomlib/circuits/mimcsponge.circom";
 
 template NullifierCreator() {
   var k = 4;
-  // Get inputs
+  // Get inputs, *never* export them publicly
   signal input r[k]; // Pre-commitment signature
   signal input s[k]; // Pre-commitment signature
   signal input pubKey[2][k]; // Pre-commitment public key
@@ -45,9 +45,9 @@ template NullifierCreator() {
   // !! But we *should not* export it as a public output
 
   // Get the compact public key
-  component publicKeyConstructor = PublicKeyConstructor();
+  component publicKeyToAddress = PublicKeyToAddress();
   publicKeyConstructor.publicKey <== pubKey;
-  signal compactPublicKey <== publicKeyConstructor.compactPublicKey;
+  signal address <== publicKeyConstructor.compactPublicKey; // *Never* export this publicly
 }
 
 component main = NullifierCreator();

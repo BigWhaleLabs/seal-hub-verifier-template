@@ -4,12 +4,12 @@ import { expect } from 'chai'
 import { version } from '../package.json'
 import getSolidityCallProof from '../utils/getSolidityCallProof'
 
-describe('FactorCheckerVerifier contract', function () {
+describe('NullifierCreatorVerifier contract', function () {
   before(async function () {
-    const factory = await ethers.getContractFactory('FactorCheckerVerifier')
+    const factory = await ethers.getContractFactory('NullifierCreatorVerifier')
     this.contract = await factory.deploy(version)
     await this.contract.deployed()
-    this.proof = await getSolidityCallProof('factor')
+    this.proof = await getSolidityCallProof('nullifier-creator')
   })
   describe('Constructor', function () {
     it('should deploy the contract with the correct fields', async function () {
