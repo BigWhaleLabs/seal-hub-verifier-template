@@ -6,6 +6,7 @@ include "../node_modules/circomlib/circuits/mimcsponge.circom";
 
 template NullifierCreator() {
   var k = 4;
+  var levels = 30;
   // Get inputs, *never* export them publicly
   signal input r[k]; // Pre-commitment signature
   signal input s[k]; // Pre-commitment signature

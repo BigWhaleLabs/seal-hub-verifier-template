@@ -2,8 +2,12 @@ import { cwd } from 'process'
 import { resolve } from 'path'
 import { writeFileSync } from 'fs'
 import getNullifierCreatorInputs from '../utils/inputs/getNullifierCreatorInputs'
+import wallet from '../utils/wallet'
 
 void (async () => {
+  console.log('ECDSA private key', wallet.privateKey)
+  console.log('ECDSA public key', wallet.publicKey)
+  console.log('ECDSA address', wallet.address)
   const inputs = {
     'nullifier-creator': getNullifierCreatorInputs,
   }

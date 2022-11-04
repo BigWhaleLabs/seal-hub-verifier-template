@@ -1477,13 +1477,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/ed25519@npm:^1.7.1":
-  version: 1.7.1
-  resolution: "@noble/ed25519@npm:1.7.1"
-  checksum: b8e50306ac70f5cecc349111997e72e897b47a28d406b96cf95d0ebe7cbdefb8380d26117d7847d94102281db200aa3a494e520f9fc12e2f292e0762cb0fa333
-  languageName: node
-  linkType: hard
-
 "@noble/hashes@npm:1.0.0, @noble/hashes@npm:~1.0.0":
   version: 1.0.0
   resolution: "@noble/hashes@npm:1.0.0"
@@ -2620,6 +2613,13 @@ __metadata:
   version: 1.1.0
   resolution: "@yarnpkg/lockfile@npm:1.1.0"
   checksum: 05b881b4866a3546861fee756e6d3812776ea47fa6eb7098f983d6d0eefa02e12b66c3fff931574120f196286a7ad4879ce02743c8bb2be36c6a576c7852083a
+  languageName: node
+  linkType: hard
+
+"@zk-kit/incremental-merkle-tree@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@zk-kit/incremental-merkle-tree@npm:1.0.0"
+  checksum: 2b5d7b5cc08cf3aea536d6541a1177221fcacca5b93fb22e37cd05926d138fe69035b73cb42e09798505caf1b7a75ad225027d13d35c2f0d7b216147cafd184e
   languageName: node
   linkType: hard
 
@@ -13961,7 +13961,6 @@ __metadata:
   dependencies:
     "@big-whale-labs/versioned-contract": ^1.0.2
     "@ethersproject/providers": ^5.7.2
-    "@noble/ed25519": ^1.7.1
     "@nomiclabs/hardhat-ethers": ^2.2.1
     "@nomiclabs/hardhat-etherscan": ^3.1.2
     "@nomiclabs/hardhat-waffle": ^2.0.3
@@ -13973,6 +13972,7 @@ __metadata:
     "@types/node": ^18.11.9
     "@typescript-eslint/eslint-plugin": ^5.42.0
     "@typescript-eslint/parser": ^5.42.0
+    "@zk-kit/incremental-merkle-tree": ^1.0.0
     chai: ^4.3.6
     circom_tester: ^0.0.19
     circomlib: ^2.0.5

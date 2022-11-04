@@ -78,5 +78,8 @@
   "packageManager": "yarn@3.2.3",
   "engines": {
     "node": ">=8.3.0"
+  },
+  "dependencies": {
+    "@zk-kit/incremental-merkle-tree": "^1.0.0"
   }
 }
