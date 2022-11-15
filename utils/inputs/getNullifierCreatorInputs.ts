@@ -2,15 +2,12 @@ import { BigNumber, utils } from 'ethers'
 import { IncrementalMerkleTree } from '@zk-kit/incremental-merkle-tree'
 import { Input } from 'utils/Input'
 import { buildPoseidon } from 'circomlibjs'
-import Mimc7 from '../Mimc7'
 import generateCommitment from './generateCommitment'
 import generateInputs from './generateInputs'
 import wallet from '../wallet'
 
 async function merkleTreeInputsForSig(signatureInputs: Input) {
-  const preCommitment = generateCommitment(signatureInputs)
-  const mimc7 = await new Mimc7().prepare()
-  const commitment = BigNumber.from(mimc7.hash(preCommitment)).toBigInt()
+  const commitment = await generateCommitment(signatureInputs)
   const ninetyNineCommitments = Array(99)
     .fill(undefined)
     .map(() => BigNumber.from(utils.randomBytes(32)).toBigInt())

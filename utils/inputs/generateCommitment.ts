@@ -1,6 +1,8 @@
-import { BigIntOrString, Input } from 'utils/Input'
+import { BigIntOrString, Input } from '../Input'
+import { BigNumber } from 'ethers'
+import Mimc7 from '../Mimc7'
 
-export default function generateCommitment(inputs: Input) {
+export default async function generateCommitment(inputs: Input) {
   const k = 4
   const prepHash: BigIntOrString[] = []
 
@@ -12,5 +14,8 @@ export default function generateCommitment(inputs: Input) {
     prepHash[4 * k + i] = inputs.pubKey[1][i]
   }
 
-  return prepHash.flat().map((v) => BigInt(v))
+  const mimc7 = await new Mimc7().prepare()
+  const preCommitment = prepHash.flat().map((v) => BigInt(v))
+
+  return BigNumber.from(mimc7.hash(preCommitment)).toBigInt()
 }
