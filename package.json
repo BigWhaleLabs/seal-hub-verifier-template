@@ -80,6 +80,7 @@
     "node": ">=8.3.0"
   },
   "dependencies": {
+    "@ethereumjs/util": "^8.0.2",
     "@zk-kit/incremental-merkle-tree": "^1.0.0"
   }
 }
