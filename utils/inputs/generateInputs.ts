@@ -4,8 +4,6 @@ import BN from 'bn.js'
 import elliptic from 'elliptic'
 
 const ec = new elliptic.ec('secp256k1')
-const STRIDE = 8n
-const NUM_STRIDES = 256n / STRIDE // = 32
 const REGISTERS = 4n
 
 const SECP256K1_N = new BN(
@@ -26,11 +24,6 @@ export function publicKeyToArraysSplitted(publicKey: string) {
 
 const addHexPrefix = (str: string) => `0x${str}`
 
-interface ExtendedBasePoint extends elliptic.curve.base.BasePoint {
-  x: BN
-  y: BN
-}
-
 const splitToRegisters = (value?: BN | string) => {
   const registers = [] as bigint[]
 
@@ -46,32 +39,6 @@ const splitToRegisters = (value?: BN | string) => {
   }
 
   return registers.map((el) => el.toString())
-}
-
-const getPointPreComputes = (point: ExtendedBasePoint) => {
-  const keyPoint = ec.keyFromPublic({
-    x: Buffer.from(point.x.toString(16), 'hex').toString('hex'),
-    y: Buffer.from(point.y.toString(16), 'hex').toString('hex'),
-  })
-
-  const gPowers = [] as (bigint[] | string[])[][][]
-  for (let i = 0n; i < NUM_STRIDES; i++) {
-    const stride: (bigint[] | string[])[][] = []
-    const power = 2n ** (i * STRIDE)
-    for (let j = 0n; j < 2n ** STRIDE; j++) {
-      const l = j * power
-
-      const gPower = keyPoint
-        .getPublic()
-        .mul(new BN(l.toString())) as ExtendedBasePoint
-      const x = splitToRegisters(gPower.x)
-      const y = splitToRegisters(gPower.y)
-      stride.push([x, y])
-    }
-    gPowers.push(stride)
-  }
-
-  return gPowers
 }
 
 export default async function generateInputs(signer: Wallet, message: string) {
