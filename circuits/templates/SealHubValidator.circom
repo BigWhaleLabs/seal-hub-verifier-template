@@ -1,6 +1,6 @@
 pragma circom 2.0.4;
 
-include "../circomlib/mimc.circom";
+include "../../circomlib/circuits/mimc.circom";
 include "../helpers/MerkleTreeChecker.circom";
 
 template SealHubValidator() {
