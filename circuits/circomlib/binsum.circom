@@ -51,7 +51,7 @@ To waranty binary outputs:
  */
  pragma circom 2.0.0;
 
-function nbits(a) {
+function shnbits(a) {
     var n = 1;
     var r = 0;
     while (n-1<a) {
@@ -62,8 +62,8 @@ function nbits(a) {
 }
 
 
-template BinSum(n, ops) {
-    var nout = nbits((2**n -1)*ops);
+template shBinSum(n, ops) {
+    var nout = shnbits((2**n -1)*ops);
     signal input in[ops][n];
     signal output out[nout];
 

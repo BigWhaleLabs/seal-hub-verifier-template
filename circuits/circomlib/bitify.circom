@@ -22,7 +22,7 @@ include "comparators.circom";
 include "aliascheck.circom";
 
 
-template Num2Bits(n) {
+template shNum2Bits(n) {
     signal input in;
     signal output out[n];
     var lc1=0;
@@ -38,12 +38,12 @@ template Num2Bits(n) {
     lc1 === in;
 }
 
-template Num2Bits_strict() {
+template shNum2Bits_strict() {
     signal input in;
     signal output out[254];
 
-    component aliasCheck = AliasCheck();
-    component n2b = Num2Bits(254);
+    component aliasCheck = shAliasCheck();
+    component n2b = shNum2Bits(254);
     in ==> n2b.in;
 
     for (var i=0; i<254; i++) {
@@ -52,7 +52,7 @@ template Num2Bits_strict() {
     }
 }
 
-template Bits2Num(n) {
+template shBits2Num(n) {
     signal input in[n];
     signal output out;
     var lc1=0;
@@ -66,12 +66,12 @@ template Bits2Num(n) {
     lc1 ==> out;
 }
 
-template Bits2Num_strict() {
+template shBits2Num_strict() {
     signal input in[254];
     signal output out;
 
-    component aliasCheck = AliasCheck();
-    component b2n = Bits2Num(254);
+    component aliasCheck = shAliasCheck();
+    component b2n = shBits2Num(254);
 
     for (var i=0; i<254; i++) {
         in[i] ==> b2n.in[i];
@@ -81,7 +81,7 @@ template Bits2Num_strict() {
     b2n.out ==> out;
 }
 
-template Num2BitsNeg(n) {
+template shNum2BitsNeg(n) {
     signal input in;
     signal output out[n];
     var lc1=0;

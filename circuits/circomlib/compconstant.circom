@@ -22,7 +22,7 @@ include "bitify.circom";
 
 // Returns 1 if in (in binary) > ct
 
-template CompConstant(ct) {
+template shCompConstant(ct) {
     signal input in[254];
     signal output out;
 
@@ -66,7 +66,7 @@ template CompConstant(ct) {
 
     sout <== sum;
 
-    component num2bits = Num2Bits(135);
+    component num2bits = shNum2Bits(135);
 
     num2bits.in <== sout;
 

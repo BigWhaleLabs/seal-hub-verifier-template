@@ -21,7 +21,7 @@ pragma circom 2.0.0;
 include "compconstant.circom";
 
 
-template AliasCheck() {
+template shAliasCheck() {
 
     signal input in[254];
 

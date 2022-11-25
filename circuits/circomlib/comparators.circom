@@ -21,7 +21,7 @@ pragma circom 2.0.0;
 include "bitify.circom";
 include "binsum.circom";
 
-template IsZero() {
+template shIsZero() {
     signal input in;
     signal output out;
 
@@ -34,22 +34,22 @@ template IsZero() {
 }
 
 
-template IsEqual() {
+template shIsEqual() {
     signal input in[2];
     signal output out;
 
-    component isz = IsZero();
+    component isz = shIsZero();
 
     in[1] - in[0] ==> isz.in;
 
     isz.out ==> out;
 }
 
-template ForceEqualIfEnabled() {
+template shForceEqualIfEnabled() {
     signal input enabled;
     signal input in[2];
 
-    component isz = IsZero();
+    component isz = shIsZero();
 
     in[1] - in[0] ==> isz.in;
 
@@ -86,7 +86,7 @@ template LessThan(n) {
 }
 */
 
-template LessThan(n) {
+template shLessThan(n) {
     assert(n <= 252);
     signal input in[2];
     signal output out;
@@ -102,11 +102,11 @@ template LessThan(n) {
 
 // N is the number of bits the input  have.
 // The MSF is the sign bit.
-template LessEqThan(n) {
+template shLessEqThan(n) {
     signal input in[2];
     signal output out;
 
-    component lt = LessThan(n);
+    component lt = shLessThan(n);
 
     lt.in[0] <== in[0];
     lt.in[1] <== in[1]+1;
@@ -115,11 +115,11 @@ template LessEqThan(n) {
 
 // N is the number of bits the input  have.
 // The MSF is the sign bit.
-template GreaterThan(n) {
+template shGreaterThan(n) {
     signal input in[2];
     signal output out;
 
-    component lt = LessThan(n);
+    component lt = shLessThan(n);
 
     lt.in[0] <== in[1];
     lt.in[1] <== in[0];
@@ -128,11 +128,11 @@ template GreaterThan(n) {
 
 // N is the number of bits the input  have.
 // The MSF is the sign bit.
-template GreaterEqThan(n) {
+template shGreaterEqThan(n) {
     signal input in[2];
     signal output out;
 
-    component lt = LessThan(n);
+    component lt = shLessThan(n);
 
     lt.in[0] <== in[1];
     lt.in[1] <== in[0]+1;
