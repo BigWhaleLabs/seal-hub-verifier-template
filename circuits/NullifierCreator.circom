@@ -2,7 +2,7 @@ pragma circom 2.0.4;
 
 include "./templates/SealHubValidator.circom";
 include "./templates/PublicKeyChunksToNum.circom";
-include "./circomlib/mimcsponge.circom";
+include "../circomlib/circuits/mimcsponge.circom";
 
 template NullifierCreator() {
   var k = 4;
