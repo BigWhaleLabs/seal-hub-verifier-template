@@ -53,7 +53,6 @@ __metadata:
     "@zk-kit/incremental-merkle-tree": ^1.0.0
     chai: ^4.3.6
     circom_tester: ^0.0.19
-    circomlib: ^2.0.5
     circomlibjs: ^0.1.7
     dotenv: ^16.0.3
     envalid: ^7.3.1
@@ -4962,13 +4961,6 @@ __metadata:
     tmp-promise: ^3.0.3
     util: ^0.12.4
   checksum: 703d7317493ddafb33462b5b0caf9b8a95bde938429e030d024fa7ac41ccb45a9ddbe8ebb93f91138dbee94bb2e0d504570c0aca070802d79ee532ba1ae5db0e
-  languageName: node
-  linkType: hard
-
-"circomlib@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "circomlib@npm:2.0.5"
-  checksum: df8c3e0d51007758e30bb7ebad059ce692836420c85179088a20581c0adbf8f969d8cf901f9047adfcb80d45741eef4abe4d0d5e4c46748ace06e04256b5bfe7
   languageName: node
   linkType: hard
 

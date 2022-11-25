@@ -1,6 +1,6 @@
 pragma circom 2.0.4;
 
-include "../../node_modules/circomlib/circuits/poseidon.circom";
+include "../circomlib/poseidon.circom";
 
 // Computes Poseidon([left, right])
 template HashLeftRight() {
