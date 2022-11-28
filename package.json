@@ -1,5 +1,5 @@
 {
-  "name": "seal-hub-verifier-template",
+  "name": "@big-whale-labs/seal-hub-verifier-template",
   "version": "0.0.1",
   "description": "SealHub verifier template",
   "repository": {
@@ -14,7 +14,8 @@
     "yarn": false
   },
   "files": [
-    "dist/typechain/**/*"
+    "circuits/**/*",
+    "circomlib/**/*"
   ],
   "main": "dist/typechain/index.js",
   "types": "dist/typechain/index.d.ts",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@big-whale-labs/versioned-contract": "^1.0.2",
+    "@ethereumjs/util": "^8.0.2",
     "@ethersproject/providers": "^5.7.2",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.2",
@@ -46,9 +48,9 @@
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
+    "@zk-kit/incremental-merkle-tree": "^1.0.0",
     "chai": "^4.3.6",
     "circom_tester": "^0.0.19",
-    "circomlib": "^2.0.5",
     "circomlibjs": "^0.1.7",
     "dotenv": "^16.0.3",
     "envalid": "^7.3.1",
@@ -78,8 +80,5 @@
   "packageManager": "yarn@3.2.3",
   "engines": {
     "node": ">=8.3.0"
-  },
-  "dependencies": {
-    "@zk-kit/incremental-merkle-tree": "^1.0.0"
   }
 }

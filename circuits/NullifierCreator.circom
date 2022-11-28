@@ -2,7 +2,7 @@ pragma circom 2.0.4;
 
 include "./templates/SealHubValidator.circom";
 include "./templates/PublicKeyChunksToNum.circom";
-include "../node_modules/circomlib/circuits/mimcsponge.circom";
+include "../circomlib/circuits/mimcsponge.circom";
 
 template NullifierCreator() {
   var k = 4;
@@ -10,14 +10,16 @@ template NullifierCreator() {
   // Get inputs, *never* export them publicly
   signal input r[k]; // Pre-commitment signature
   signal input s[k]; // Pre-commitment signature
+  signal input U[2][k]; // Pre-commitment signature
   signal input pubKey[2][k]; // Pre-commitment public key
   signal input pathIndices[levels]; // Merkle proof that commitment is a part of the Merkle tree
   signal input siblings[levels]; // Merkle proof that commitment is a part of the Merkle tree
   // Verify SealHub commitment
   component sealHubValidator = SealHubValidator();
   for (var i = 0; i < k; i++) {
-    sealHubValidator.r[i] <== r[i];
     sealHubValidator.s[i] <== s[i];
+    sealHubValidator.U[0][i] <== U[0][i];
+    sealHubValidator.U[1][i] <== U[1][i];
     sealHubValidator.pubKey[0][i] <== pubKey[0][i];
     sealHubValidator.pubKey[1][i] <== pubKey[1][i];
   }
