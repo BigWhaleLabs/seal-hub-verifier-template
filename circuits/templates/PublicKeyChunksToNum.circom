@@ -3,6 +3,23 @@ pragma circom 2.0.4;
 include "../../circomlib/circuits/bitify.circom";
 
 // Sourced from https://github.com/0xPARC/circom-ecdsa/blob/master/circuits/zk-identity/eth.circom
+template FlattenPubkeyPoint(numBits, k) {
+  signal input chunkedPubkey[1][k];
+  signal output pubkeyBits[256];
+  assert(numBits*k >= 256);
+  component chunks2Bits[k];
+  for(var chunk = 0; chunk < k; chunk++){
+    chunks2Bits[chunk] = Num2Bits(numBits);
+    chunks2Bits[chunk].in <== chunkedPubkey[0][chunk];
+
+    for(var bit = 0; bit < numBits; bit++){
+        var bitIndex = bit + numBits * chunk;
+        if(bitIndex < 256) {
+          pubkeyBits[bitIndex] <== chunks2Bits[chunk].out[bit];
+        }
+    }
+  }
+}
 template FlattenPubkey(numBits, k) {
   signal input chunkedPubkey[2][k];
   signal output pubkeyBits[512];
@@ -49,5 +66,14 @@ template PublicKeyChunksToNum() {
   for (var i = 0; i < 512; i++) {
     bits2Num.in[i] <== flattenPubkey.pubkeyBits[i];
   }
+  component flattenPubkeyPoint = FlattenPubkeyPoint(n, k);
+  for (var i = 0; i < k; i++) {
+    flattenPubkeyPoint.chunkedPubkey[0][i] <== pubKey[0][i];
+  }
+  component bits2NumPoint = Bits2Num(256);
+  for (var i = 0; i < 256; i++) {
+    bits2NumPoint.in[i] <== flattenPubkeyPoint.pubkeyBits[i];
+  }
   signal output publicKeyNum <== bits2Num.out;
+  signal output publicKeyPoint <== bits2NumPoint.out;
 }
