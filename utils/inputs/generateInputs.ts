@@ -48,7 +48,6 @@ export default async function generateInputs(signer: Wallet, message: string) {
 
   const biR = new BN(r.slice(2, r.length), 'hex')
   const hexS = s.slice(2, s.length)
-  const hexR = r.slice(2, r.length)
 
   // Get the group element: -(m * r^−1 * G)
   const rInv = new BN(biR).invm(SECP256K1_N)
@@ -60,8 +59,7 @@ export default async function generateInputs(signer: Wallet, message: string) {
 
   return {
     U: [splitToRegisters(U.x), splitToRegisters(U.y)],
-    s: [splitToRegisters(hexS)],
-    r: [splitToRegisters(hexR)],
-    pubKey: publicKeyToArraysSplitted(signer.publicKey),
+    s: splitToRegisters(hexS),
+    address: BigInt(signer.address),
   }
 }

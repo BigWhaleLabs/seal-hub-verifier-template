@@ -1,17 +1,15 @@
 pragma circom 2.0.4;
 
 include "./templates/SealHubValidator.circom";
-include "./templates/PublicKeyChunksToNum.circom";
 include "../circomlib/circuits/mimcsponge.circom";
 
 template NullifierCreator() {
-  var k = 4;
-  var levels = 30;
-  // Get inputs, *never* export them publicly
-  signal input r[k]; // Pre-commitment signature
-  signal input s[k]; // Pre-commitment signature
-  signal input U[2][k]; // Pre-commitment signature
-  signal input pubKey[2][k]; // Pre-commitment public key
+  var k = 4; // ECDSA verification number of components per number
+  var levels = 30; // Depth of the commitment Merkle tree
+  // Private inputs, *never* export them publicly
+  signal input s[k]; // Pre-commitment signature component
+  signal input U[2][k]; // Pre-commitment signature component
+  signal input address; // Pre-commitment address
   signal input pathIndices[levels]; // Merkle proof that commitment is a part of the Merkle tree
   signal input siblings[levels]; // Merkle proof that commitment is a part of the Merkle tree
   // Verify SealHub commitment
@@ -20,9 +18,8 @@ template NullifierCreator() {
     sealHubValidator.s[i] <== s[i];
     sealHubValidator.U[0][i] <== U[0][i];
     sealHubValidator.U[1][i] <== U[1][i];
-    sealHubValidator.pubKey[0][i] <== pubKey[0][i];
-    sealHubValidator.pubKey[1][i] <== pubKey[1][i];
   }
+  sealHubValidator.address <== address;
   for (var i = 0; i < levels; i++) {
     sealHubValidator.pathIndices[i] <== pathIndices[i];
     sealHubValidator.siblings[i] <== siblings[i];
@@ -31,36 +28,35 @@ template NullifierCreator() {
   signal output merkleRoot <== sealHubValidator.merkleRoot;
 
   // !! By now, we have verified that the user:
-  // !! 1. Knows the signature r, s with pubKey
-  // !! 2. Commitments derived from r, s are in the Merkle tree
-  // !! We can now use r, s to create a nullifier that will be deterministic for this r, s
+  // !! 1. Knows the signature r, U with the address
+  // !! 2. Commitment derived from r, U and the address are in the Merkle tree
+  // !! We can now use r, U, address to create a nullifier that will be deterministic for this r, U and address
 
   // Compute nullifier
-  component mimc = MiMCSponge(2 * k + 2, 220, 1);
+  component nullifierMimc = MiMCSponge(3 * k + 3, 220, 1);
+  nullifierMimc.k <== 0;
+  // Fill in pre-commitment
   for (var i = 0; i < k; i++) {
-    mimc.ins[i] <== r[i];
-    mimc.ins[i + k] <== s[i];
+    nullifierMimc.ins[i] <== s[i];
+    nullifierMimc.ins[k + i] <== U[0][i];
+    nullifierMimc.ins[2 * k + i] <== U[1][i];
   }
-  mimc.ins[2 * k] <== 420;
-  mimc.ins[2 * k + 1] <== 69;
-  mimc.k <== 0;
+  nullifierMimc.ins[3 * k] <== address;
+  // Add extra numbers specific to our application (just to scramble the hash)
+  nullifierMimc.ins[3 * k + 1] <== 69;
+  nullifierMimc.ins[3 * k + 2] <== 420;
   // Export nullifier
-  signal output nullifierHash <== mimc.outs[0];
+  signal output nullifierHash <== nullifierMimc.outs[0];
 
   // !! We are now sure that the user who generates this ZKP
-  // !! knows the signature r, s signed with private key corresponding
-  // !! to the pubKey. We can use this pubKey anyway we want
-  // !! e.g. proving that it's a part of a merkle tree and exporting
+  // !! knows the signature s, U signed with private key corresponding
+  // !! to the address. We can use this address anyway we want
+  // !! e.g. proving that it's a part of a merkle tree of Cryptopunk holders and exporting
   // !! the merkle root
   // !! But we *should not* export it as a public output
 
-  // Get the compact public key
-  component publicKeyChunksToNum = PublicKeyChunksToNum();
-  for (var i = 0; i < k; i++) {
-    publicKeyChunksToNum.pubKey[0][i] <== pubKey[0][i];
-    publicKeyChunksToNum.pubKey[1][i] <== pubKey[1][i];
-  }
-  signal publicKeyNum <== publicKeyChunksToNum.publicKeyNum; // *Never* export this publicly
+  // Print the address
+  log(address); // *Never* export this publicly
 }
 
 component main = NullifierCreator();

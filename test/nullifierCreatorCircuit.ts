@@ -17,11 +17,11 @@ describe('NullifierCreator circuit', function () {
   })
 
   it('should generate the witness successfully', async function () {
-    const inputs = await getNullifier(this.baseInputs)
+    const nullifier = await getNullifier(this.baseInputs)
     const witness = await this.circuit.calculateWitness(this.baseInputs)
     await this.circuit.assertOut(witness, {})
     expect(witness[1]).to.eq(this.treeProof.root)
-    expect(witness[2]).to.eq(inputs)
+    expect(witness[2]).to.eq(nullifier)
   })
   it('should fail because inputs are different', async function () {
     let inputs = await getNullifier(this.baseInputs)
