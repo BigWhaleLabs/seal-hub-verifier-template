@@ -1,9 +1,8 @@
 import { BigNumber, utils } from 'ethers'
 import {
-  getCommitmentFromPrecommitment,
-  getMerkleTreeInputs,
+  getCommitmentFromSignature,
   getMessageForAddress,
-  getUAndSFromSignature,
+  getSealHubValidatorInputs,
 } from '@big-whale-labs/seal-hub-kit'
 import wallet from '../wallet'
 
@@ -14,18 +13,18 @@ const ninetyNineCommitments = Array(99)
 export default async function (commitments = ninetyNineCommitments) {
   const message = getMessageForAddress(wallet.address)
   const signature = await wallet.signMessage(message)
-
-  const { U, s } = getUAndSFromSignature(signature, message)
-  const address = utils.verifyMessage(message, signature)
-  const commitment = await getCommitmentFromPrecommitment({ U, s, address })
-  const merkleTreeInputs = await getMerkleTreeInputs(commitment, [
-    ...commitments,
-    commitment,
-  ])
+  const commitment = await getCommitmentFromSignature(signature, message)
+  const sealHubValidatorInputs = await getSealHubValidatorInputs(
+    signature,
+    message,
+    undefined,
+    [...commitments, commitment]
+  )
   return {
-    s,
-    U,
-    address,
-    ...merkleTreeInputs,
+    pathIndices: sealHubValidatorInputs.pathIndices,
+    siblings: sealHubValidatorInputs.siblings,
+    U: sealHubValidatorInputs.U,
+    s: sealHubValidatorInputs.s,
+    address: sealHubValidatorInputs.address,
   }
 }
