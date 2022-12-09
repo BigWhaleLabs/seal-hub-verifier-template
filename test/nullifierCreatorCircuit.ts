@@ -2,9 +2,7 @@ import { BigNumber, utils } from 'ethers'
 import { expect } from 'chai'
 import { wasm as wasmTester } from 'circom_tester'
 import getNullifier from '../utils/inputs/getNullifier'
-import getNullifierCreatorInputs, {
-  generateTreeProof,
-} from '../utils/inputs/getNullifierCreatorInputs'
+import getNullifierCreatorInputs from '../utils/inputs/getNullifierCreatorInputs'
 
 describe('NullifierCreator circuit', function () {
   before(async function () {

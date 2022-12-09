@@ -1,9 +1,9 @@
-import { BigIntOrString, Input } from '../Input'
+import { Precommitment } from '@big-whale-labs/seal-hub-kit'
 import MimcSponge from '../MimcSponge'
 
-export default async function getNullifier(inputs: Input) {
+export default async function (inputs: Precommitment) {
   const k = 4
-  const prepHash: BigIntOrString[] = []
+  const prepHash: (bigint | string)[] = []
 
   for (let i = 0; i < k; i++) {
     prepHash[i] = inputs.s[i]
