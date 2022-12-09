@@ -33,7 +33,7 @@ describe('NullifierCreator circuit', function () {
     const nullifier = await getNullifier(this.baseInputs)
     const witness = await this.circuit.calculateWitness(this.baseInputs)
     await this.circuit.assertOut(witness, {})
-    // expect(witness[1]).to.eq(this.treeProof.root)
+    expect(witness[1]).to.eq(this.treeProof.root)
     expect(witness[2]).to.eq(nullifier)
   })
 })
