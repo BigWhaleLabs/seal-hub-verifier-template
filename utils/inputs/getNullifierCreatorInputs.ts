@@ -18,7 +18,10 @@ export default async function (commitments = ninetyNineCommitments) {
   const { U, s } = getUAndSFromSignature(signature, message)
   const address = utils.verifyMessage(message, signature)
   const commitment = await getCommitmentFromPrecommitment({ U, s, address })
-  const merkleTreeInputs = await getMerkleTreeInputs(commitment, commitments)
+  const merkleTreeInputs = await getMerkleTreeInputs(commitment, [
+    ...commitments,
+    commitment,
+  ])
   return {
     s,
     U,
