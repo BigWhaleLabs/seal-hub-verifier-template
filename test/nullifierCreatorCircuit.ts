@@ -20,10 +20,10 @@ describe('NullifierCreator circuit', function () {
     const { U, s } = getUAndSFromSignature(signature, message)
     const address = utils.verifyMessage(message, signature)
     this.commitment = await getCommitmentFromPrecommitment({ U, s, address })
-    ;(this.commitments = Array(99)
+    this.commitments = Array(99)
       .fill(undefined)
-      .map(() => BigNumber.from(utils.randomBytes(32)).toBigInt())),
-      (this.baseInputs = await getNullifierCreatorInputs(this.commitments))
+      .map(() => BigNumber.from(utils.randomBytes(32)).toBigInt())
+    this.baseInputs = await getNullifierCreatorInputs(this.commitments)
     this.treeProof = await getMerkleTreeProof(this.commitment, [
       ...this.commitments,
       this.commitment,
