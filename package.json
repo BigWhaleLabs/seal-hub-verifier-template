@@ -28,7 +28,7 @@
     "lint": "prettier --check . && eslint --max-warnings 0 --ext ts scripts test && yarn eth-lint",
     "prettify": "prettier --write .",
     "release": "np",
-    "prepublishOnly": "yarn build && yarn tsc",
+    "prepublishOnly": "yarn build && yarn tsc --skipLibCheck",
     "generate-inputs": "ts-node scripts/generate-inputs.ts",
     "compile": "scripts/compile-circuit.sh NullifierCreator nullifier-creator",
     "download-ptau": "curl https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_15.ptau -o pot/pot15_final.ptau"
