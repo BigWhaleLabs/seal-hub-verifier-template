@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import {
   getCommitmentFromPrecommitment,
   getMerkleTreeProof,
-  getMessageForAddress,
+  getMessage,
   getUAndSFromSignature,
 } from '@big-whale-labs/seal-hub-kit'
 import { wasm as wasmTester } from 'circom_tester'
@@ -14,7 +14,7 @@ import wallet from '../utils/wallet'
 describe('NullifierCreator circuit', function () {
   before(async function () {
     this.circuit = await wasmTester('circuits/NullifierCreator.circom')
-    const message = getMessageForAddress(wallet.address)
+    const message = getMessage()
     const signature = await wallet.signMessage(message)
 
     const { U, s } = getUAndSFromSignature(signature, message)
